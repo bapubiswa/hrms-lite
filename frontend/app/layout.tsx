@@ -6,30 +6,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
 
 export const metadata = {
-  title: 'HRMS Lite - Employee & Attendance Management',
-  description: 'A premium Human Resource Management System for managing employees and tracking attendance.',
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
-}
-
-export const viewport = {
-  themeColor: '#4338ca',
+  title: 'HRMS-Lite',
+  description: 'HRMS Lite',
 }
 
 export default function RootLayout({ children }) {
