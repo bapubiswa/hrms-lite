@@ -19,7 +19,14 @@ export default function EmployeeList({ employees, refresh, onEdit }) {
   const [currentPage, setCurrentPage] = useState(1);
   const perPage = 6;
 
-  const deleteEmployee = async (id) => {
+const deleteEmployee = async (id) => {
+     // DEBUG
+
+  if (!id) {
+    alert("ID missing!");
+    return;
+  }
+
   const confirmDelete = window.confirm(
     "Are you sure you want to delete this employee?"
   );
@@ -27,12 +34,12 @@ export default function EmployeeList({ employees, refresh, onEdit }) {
   if (!confirmDelete) return;
 
   try {
-    const res = await fetch(
-      `http://127.0.0.1:8000/api/employees/delete/${id}/`,
-      {
-        method: "DELETE",
-      }
-    );
+    const res = await fetch(`/api/employees/${id}`, {
+      method: "DELETE",
+    });
+
+    const text = await res.text();
+   
 
     if (!res.ok) {
       toast.error("Delete failed");
@@ -40,10 +47,10 @@ export default function EmployeeList({ employees, refresh, onEdit }) {
     }
 
     toast.success("Employee deleted successfully");
+    refresh();
 
-    refresh(); // reload list
   } catch (error) {
-    console.error(error);
+    
     toast.error("Server error");
   }
 };

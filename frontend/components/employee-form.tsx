@@ -37,6 +37,68 @@ export default function EmployeeForm({
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (loading) return;
+
+  //   setLoading(true);
+
+  //   try {
+  //     let res;
+
+  //     if (selected) {
+  //       // UPDATE
+  //       res = await fetch(
+  //         `http://127.0.0.1:8000/api/employees/update/${selected.id}/`,
+  //         {
+  //           method: "PATCH",
+  //           headers: { "Content-Type": "application/json" },
+  //           body: JSON.stringify(form),
+  //         }
+  //       );
+  //     } else {
+  //       // ADD
+  //       res = await fetch(`http://127.0.0.1:8000/api/employees/add/`, {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify(form),
+  //       });
+  //     }
+
+  //     const data = await res.json();
+
+  //     // ❌ if error from backend
+  //     if (!res.ok) {
+  //       const errorMsg =
+  //         data.employee_id?.[0] ||
+  //         data.email?.[0] ||
+  //         data.error ||
+  //         Object.values(data)[0]?.[0] ||
+  //         "Something went wrong";
+
+  //       toast.error("❌ " + errorMsg);
+  //       return;
+  //     }
+
+  //     // ✅ success message
+  //     toast.success(
+  //       selected
+  //         ? "✅ Employee updated successfully"
+  //         : "✅ Employee added successfully"
+  //     );
+
+  //     refresh();   // reload list
+  //     onClose();   // close modal
+  //     setForm(defaultForm);
+
+  //   } catch (err) {
+  //     console.error(err);
+  //     toast.error("❌ Server error");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loading) return;
@@ -48,17 +110,14 @@ export default function EmployeeForm({
 
       if (selected) {
         // UPDATE
-        res = await fetch(
-          `http://127.0.0.1:8000/api/employees/update/${selected.id}/`,
-          {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(form),
-          }
-        );
+        res = await fetch(`/api/employees/${selected.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
       } else {
-        // ADD
-        res = await fetch(`http://127.0.0.1:8000/api/employees/add/`, {
+        // ADD EMPLOYEE (FIXED)
+        res = await fetch(`/api/employees`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
@@ -67,7 +126,6 @@ export default function EmployeeForm({
 
       const data = await res.json();
 
-      // ❌ if error from backend
       if (!res.ok) {
         const errorMsg =
           data.employee_id?.[0] ||
@@ -80,15 +138,14 @@ export default function EmployeeForm({
         return;
       }
 
-      // ✅ success message
       toast.success(
         selected
-          ? "✅ Employee updated successfully"
-          : "✅ Employee added successfully"
+          ? "Employee updated successfully"
+          : "Employee added successfully"
       );
 
-      refresh();   // reload list
-      onClose();   // close modal
+      refresh();
+      onClose();
       setForm(defaultForm);
 
     } catch (err) {
@@ -98,7 +155,6 @@ export default function EmployeeForm({
       setLoading(false);
     }
   };
-
   if (!show) return null;
 
   const fields = [

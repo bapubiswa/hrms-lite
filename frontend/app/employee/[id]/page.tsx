@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Toaster } from "sonner";
 import AppShell from "@/components/app-shell";
+import { toast } from "sonner";
 
 export default function EmployeeProfilePage({ params }) {
   const { id } = use(params); 
@@ -21,14 +22,78 @@ export default function EmployeeProfilePage({ params }) {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+//   useEffect(() => {
+//   async function load() {
+//     try {
+//       const API = "http://127.0.0.1:8000/api";
+
+//       const [empRes, attRes] = await Promise.all([
+//         fetch(`${API}/employees/`),
+//         fetch(`${API}/attendance/${id}/`)
+//       ]);
+
+//       if (!empRes.ok || !attRes.ok) {
+//         toast.error("Failed to load data");
+//         return;
+//       }
+
+//       const employees = await empRes.json();
+//       const attendance = await attRes.json();
+
+//       const emp = employees.find(e => e.id === Number(id));
+
+//       setEmployee(emp || null);
+//       setRecords(attendance);
+
+//     } catch (error) {
+//       console.error(error);
+//       toast.error("Server error");
+//     } finally {
+//       setLoading(false);
+//     }
+//   }
+
+//   if (id) load();
+// }, [id]);
+//   useEffect(() => {
+//   async function load() {
+//     try {
+//       const API = `${import.meta.env.VITE_API_URL}/api`;
+
+//       const [empRes, attRes] = await Promise.all([
+//         fetch(`${API}/employees/`),
+//         fetch(`${API}/attendance/${id}/`)
+//       ]);
+
+//       if (!empRes.ok || !attRes.ok) {
+//         toast.error("Failed to load data");
+//         return;
+//       }
+
+//       const employees = await empRes.json();
+//       const attendance = await attRes.json();
+
+//       const emp = employees.find(e => e.id === Number(id));
+
+//       setEmployee(emp || null);
+//       setRecords(attendance);
+
+//     } catch (error) {
+//       console.error(error);
+//       toast.error("Server error");
+//     } finally {
+//       setLoading(false);
+//     }
+//   }
+
+//   if (id) load();
+// }, [id]);
+useEffect(() => {
   async function load() {
     try {
-      const API = "http://127.0.0.1:8000/api";
-
       const [empRes, attRes] = await Promise.all([
-        fetch(`${API}/employees/`),
-        fetch(`${API}/attendance/${id}/`)
+        fetch("/api/employees", { cache: "no-store" }),
+        fetch(`/api/attendance/${id}`, { cache: "no-store" })
       ]);
 
       if (!empRes.ok || !attRes.ok) {
@@ -54,7 +119,6 @@ export default function EmployeeProfilePage({ params }) {
 
   if (id) load();
 }, [id]);
-
   const presentDays = records.filter(r => r.status === "Present").length;
   const absentDays = records.filter(r => r.status === "Absent").length;
   const totalDays = records.length;
