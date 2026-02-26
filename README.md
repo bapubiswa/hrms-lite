@@ -163,6 +163,15 @@ Login using the superuser credentials.
 
 ---
 
+## 🧭 Usage Flow
+
+To use the system correctly:
+
+1. **Create Employees** from the admin panel or employee API.
+2. **Add Attendance** records linked to existing employees.
+3. View aggregated data in the **Dashboard API**.
+
+---
 ## 🌐 Live Demo
 
 URL- https://hrms-lite-ivory-six.vercel.app/
