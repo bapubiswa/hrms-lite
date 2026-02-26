@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-u3=c*hx5dt6ww9_2&@w0)fl+s5sm-55&y@7phfa3jkmu01qn4w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "hrms-lite-5-1oid.onrender.com",
+    ".vercel.app",
+]
 
 
 # Application definition
@@ -130,3 +133,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
