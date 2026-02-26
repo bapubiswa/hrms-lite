@@ -27,7 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "hrms-lite-5-1oid.onrender.com",
+    ".onrender.com",
     ".vercel.app",
+    "localhost",
+    "127.0.0.1",
 ]
 
 
